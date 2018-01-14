@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jan 14 00:30:19 2018
+
+@author: KACHING
+"""
+
+def orderGroup(arry):
+    d={}
+    n=len(arry)
+    ret=[]
+    for i in range(0,n):
+        if arry[i] in d:
+            d[arry[i]]+=1
+        else:
+            d[arry[i]]=1            
+    
+    for key in sorted(d,reverse=True):
+        ret=ret+[key]*d[key]
+    return ret
+            
+def areDisjoint(arry1,arry2):
+    n1=len(arry1)
+    n2=len(arry2)
+    d={}
+    if n2<n1:
+        arry1,arry2=arry2,arry1
+    for index,val in enumerate(arry2):
+        d[val]=index
+    for i in range(0,n1):
+        if arry1[i] in d:
+            return False
+    return True
+
+def isProduct(arry,x):
+    d={}
+    for index,val in enumerate(arry):
+        if (val==0 and x==0) or x/val in d:
+            return True
+        else:
+            d[val]=index
+    return False
+ 
+def getPairsCount(arry,s):
+    d={}
+    n=len(arry)
+    cnt=0
+    for i in range(0,n):
+        if arry[i] in d:
+            d[arry[i]]+=1
+        else:
+            d[arry[i]]=1 
+                  
+    for val in d:
+        tmp=s-val
+        if tmp in d:
+            if tmp==val:
+                cnt=cnt+d[val]*(d[val]-1)
+            else:
+                cnt=cnt+d[val]*d[tmp]
+    return int(cnt/2)
+                     
+                  
+print(getPairsCount([10, 12, 10, 15, -1, 7, 6, 
+                   5, 4, 2, 1, 1, 1],11))     
